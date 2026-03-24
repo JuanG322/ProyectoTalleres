@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Empresa de Salud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'blue': '#0960ae',
+                        'light-blue': '#007dbf',
+                        'Dark-Grey': '#515151',
+                        'Light-Grey': '#848484',
+                        'dark-bg': '#121212',
+                        'dark-card': '#1e1e1e'
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-dark-bg min-h-screen flex flex-col items-center justify-center font-sans transition-colors duration-300">
+
+    <div class="mb-8 text-center">
+        <h1 class="text-2xl font-bold text-blue dark:text-light-blue leading-tight">
+            Empresa de Salud
+        </h1>
+    </div>
+
+    <div class="bg-white dark:bg-dark-card border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm p-8 w-full max-w-md transition-colors duration-300">
+        
+        <h2 class="text-xl text-Dark-Grey dark:text-gray-200 text-center mb-6 font-medium">Iniciar sesión</h2>
+
+        <form class="flex flex-col gap-5">
+            
+            <div class="flex flex-col gap-1">
+                <label for="tipo_doc" class="text-sm text-Dark-Grey dark:text-gray-300 ml-3 font-medium">Tipo de documento</label>
+                <div class="relative">
+                    <select id="tipo_doc" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full pl-5 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card appearance-none">
+                        <option value="" disabled selected>Seleccione una opción...</option>
+                        <option value="cc">Cédula de Ciudadanía</option>
+                        <option value="ti">Tarjeta de Identidad</option>
+                        <option value="ce">Cédula de Extranjería</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-Dark-Grey dark:text-gray-400">
+                        <span class="material-symbols-outlined text-xl">expand_more</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <label for="num_doc" class="text-sm text-Dark-Grey dark:text-gray-300 ml-3 font-medium">Número de Identificación</label>
+                <input type="text" id="num_doc" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-gray-400 dark:placeholder-gray-500">
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <label for="password" class="text-sm text-Dark-Grey dark:text-gray-300 ml-3 font-medium">Contraseña</label>
+                <div class="relative">
+                    <input type="password" id="password" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full pl-5 pr-12 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-gray-400 dark:placeholder-gray-500">
+                    <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-4 text-Light-Grey dark:text-gray-400 hover:text-Dark-Grey dark:hover:text-gray-200 focus:outline-none transition-colors cursor-pointer">
+                        <span id="icono-ojo" class="material-symbols-outlined text-xl">visibility</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between mt-2">
+                <a href="#" class="text-sm text-blue dark:text-light-blue hover:text-light-blue dark:hover:text-blue hover:underline w-32 leading-tight transition-colors">
+                    ¿Has olvidado tu contraseña?
+                </a>
+                <button type="submit" class="bg-blue hover:bg-light-blue text-white font-medium py-2 px-6 rounded-full transition-colors ">
+                    Iniciar sesión
+                </button>
+            </div>
+
+        </form>
+
+        <div class="text-center mt-8 text-sm text-Dark-Grey dark:text-gray-300">
+            <p>¿Aún no tienes una cuenta?</p>
+            <a href="Register.html" class="text-blue dark:text-light-blue hover:text-light-blue dark:hover:text-blue hover:underline transition-colors">Crear una cuenta</a>
+        </div>
+    </div>
+</body>
+</html>
