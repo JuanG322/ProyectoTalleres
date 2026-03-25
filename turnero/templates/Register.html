@@ -8,61 +8,65 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script>
         tailwind.config = {
-            darkMode: 'media', 
+            darkMode: 'class', 
             theme: {
                 extend: {
                     colors: {
-                        'blue': '#0960ae',
-                        'light-blue': '#007dbf',
-                        'Dark-Grey': '#515151',
-                        'Light-Grey': '#848484',
-                        'dark-bg': '#121212',
-                        'dark-card': '#1e1e1e'
+                        'blue': '#0960ae', 'light-blue': '#007dbf',
+                        'Dark-Grey': '#515151', 'Light-Grey': '#848484',
+                        'white': '#ffffff', 'soft-border': '#d1d5db',
+                        'dark-bg': '#121212', 'dark-card': '#1e1e1e',
+                        'dark-text': '#e5e7eb', 'dark-border': '#374151',
+                        'alert-bg': '#eff6ff'
                     },
                 },
             },
         }
     </script>
 </head>
-<body class="bg-white dark:bg-dark-bg min-h-screen flex flex-col items-center justify-center font-sans py-10 transition-colors duration-300">
+<body class="bg-white dark:bg-dark-bg min-h-screen flex flex-col items-center justify-center font-sans py-10 transition-colors duration-300 relative">
 
-    <div class="mb-6 text-center">
+    <button onclick="toggleTheme()" class="absolute top-5 right-5 p-2.5 rounded-full bg-soft-border dark:bg-dark-border text-Dark-Grey dark:text-dark-text hover:bg-Light-Grey dark:hover:bg-Dark-Grey transition-colors shadow-sm flex items-center justify-center">
+        <span id="theme-icon" class="material-symbols-outlined">dark_mode</span>
+    </button>
+
+    <div class="mb-6 text-center mt-10">
         <h1 class="text-2xl font-bold text-blue dark:text-light-blue leading-tight transition-colors duration-300">
             Empresa de Salud
         </h1>
     </div>
 
-    <div class="bg-white dark:bg-dark-card border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm p-8 w-full max-w-md transition-colors duration-300">
+    <div class="bg-white dark:bg-dark-card border border-soft-border dark:border-dark-border rounded-lg shadow-sm p-8 w-full max-w-md transition-colors duration-300">
         
         <div class="mb-6">
-            <h2 class="text-2xl text-Dark-Grey dark:text-gray-200 font-bold text-center transition-colors duration-300">Crear una cuenta</h2>
+            <h2 class="text-2xl text-Dark-Grey dark:text-dark-text font-bold text-center transition-colors duration-300">Crear una cuenta</h2>
         </div>
 
         <form class="flex flex-col gap-4">
             
             <div>
-                <label class="block text-sm text-Dark-Grey dark:text-gray-300 font-medium ml-3 mb-1 transition-colors duration-300">Nombre completo</label>
-                <input type="text" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-gray-400 dark:placeholder-gray-500 transition-colors duration-300">
+                <label class="block text-sm text-Dark-Grey dark:text-dark-text font-medium ml-3 mb-1 transition-colors duration-300">Nombre completo</label>
+                <input type="text" placeholder="Ej: Nombre Apellido" class="w-full border border-soft-border dark:border-dark-border text-Dark-Grey dark:text-dark-text rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-Light-Grey transition-colors duration-300">
             </div>
 
             <div>
-                <label class="block text-sm text-Dark-Grey dark:text-gray-300 font-medium ml-3 mb-1 transition-colors duration-300">Fecha de nacimiento</label>
-                <input type="date" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card transition-colors duration-300" style="color-scheme: light dark;">
+                <label class="block text-sm text-Dark-Grey dark:text-dark-text font-medium ml-3 mb-1 transition-colors duration-300">Fecha de nacimiento</label>
+                <input type="date" class="w-full border border-soft-border dark:border-dark-border text-Dark-Grey dark:text-dark-text rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card transition-colors duration-300" style="color-scheme: light dark;">
             </div>
 
             <div>
-                <label class="block text-sm text-Dark-Grey dark:text-gray-300 font-medium ml-3 mb-1 transition-colors duration-300">Correo electrónico</label>
-                <input type="email" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-gray-400 dark:placeholder-gray-500 transition-colors duration-300">
+                <label class="block text-sm text-Dark-Grey dark:text-dark-text font-medium ml-3 mb-1 transition-colors duration-300">Correo electrónico</label>
+                <input type="email" placeholder="ejemplo@correo.com" class="w-full border border-soft-border dark:border-dark-border text-Dark-Grey dark:text-dark-text rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-Light-Grey transition-colors duration-300">
             </div>
 
             <div>
-                <label class="block text-sm text-Dark-Grey dark:text-gray-300 font-medium ml-3 mb-1 transition-colors duration-300">Contraseña</label>
-                <input type="password" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-gray-400 dark:placeholder-gray-500 transition-colors duration-300">
+                <label class="block text-sm text-Dark-Grey dark:text-dark-text font-medium ml-3 mb-1 transition-colors duration-300">Contraseña</label>
+                <input type="password" placeholder="Contraseña nueva" class="w-full border border-soft-border dark:border-dark-border text-Dark-Grey dark:text-dark-text rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-Light-Grey transition-colors duration-300">
             </div>
             
             <div>
-                <label class="block text-sm text-Dark-Grey dark:text-gray-300 font-medium ml-3 mb-1 transition-colors duration-300">Confirmar contraseña</label>
-                <input type="password" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-gray-400 dark:placeholder-gray-500 transition-colors duration-300">
+                <label class="block text-sm text-Dark-Grey dark:text-dark-text font-medium ml-3 mb-1 transition-colors duration-300">Confirmar contraseña</label>
+                <input type="password" placeholder="Repite la contraseña" class="w-full border border-soft-border dark:border-dark-border text-Dark-Grey dark:text-dark-text rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-Light-Grey transition-colors duration-300">
             </div>
 
             <div class="flex flex-col gap-3 mt-4">
@@ -70,12 +74,26 @@
                     Registrarme
                 </button>
                 
-                <a href="login.html" class="block w-full bg-white dark:bg-dark-card border border-Light-Grey dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 text-Dark-Grey dark:text-gray-200 font-medium py-2.5 rounded-full transition-colors text-center">
+                <a href="Login.html" class="block w-full bg-white dark:bg-dark-card border border-soft-border dark:border-dark-border hover:bg-soft-border dark:hover:bg-dark-border text-Dark-Grey dark:text-dark-text font-medium py-2.5 rounded-full transition-colors text-center">
                     Ya tengo una cuenta
                 </a>
             </div>
 
         </form>
     </div>
+
+    <script>
+        function toggleTheme() {
+            const htmlTag = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (htmlTag.classList.contains('dark')) {
+                htmlTag.classList.remove('dark');
+                themeIcon.innerText = 'dark_mode';
+            } else {
+                htmlTag.classList.add('dark');
+                themeIcon.innerText = 'light_mode';
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,57 +12,61 @@
             theme: {
                 extend: {
                     colors: {
-                        'blue': '#0960ae',
-                        'light-blue': '#007dbf',
-                        'Dark-Grey': '#515151',
-                        'Light-Grey': '#848484',
-                        'dark-bg': '#121212',
-                        'dark-card': '#1e1e1e'
+                        'blue': '#0960ae', 'light-blue': '#007dbf',
+                        'Dark-Grey': '#515151', 'Light-Grey': '#848484',
+                        'white': '#ffffff', 'soft-border': '#d1d5db',
+                        'dark-bg': '#121212', 'dark-card': '#1e1e1e',
+                        'dark-text': '#e5e7eb', 'dark-border': '#374151',
+                        'alert-bg': '#eff6ff'
                     },
                 },
             },
         }
     </script>
 </head>
-<body class="bg-white dark:bg-dark-bg min-h-screen flex flex-col items-center justify-center font-sans transition-colors duration-300">
+<body class="bg-white dark:bg-dark-bg min-h-screen flex flex-col items-center justify-center font-sans transition-colors duration-300 relative">
 
-    <div class="mb-8 text-center">
-        <h1 class="text-2xl font-bold text-blue dark:text-light-blue leading-tight">
+    <button onclick="toggleTheme()" class="absolute top-5 right-5 p-2.5 rounded-full bg-soft-border dark:bg-dark-border text-Dark-Grey dark:text-dark-text hover:bg-Light-Grey dark:hover:bg-Dark-Grey transition-colors shadow-sm flex items-center justify-center">
+        <span id="theme-icon" class="material-symbols-outlined">dark_mode</span>
+    </button>
+
+    <div class="mb-8 text-center mt-10">
+        <h1 class="text-2xl font-bold text-blue dark:text-light-blue leading-tight transition-colors duration-300">
             Empresa de Salud
         </h1>
     </div>
 
-    <div class="bg-white dark:bg-dark-card border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm p-8 w-full max-w-md transition-colors duration-300">
+    <div class="bg-white dark:bg-dark-card border border-soft-border dark:border-dark-border rounded-lg shadow-sm p-8 w-full max-w-md transition-colors duration-300">
         
-        <h2 class="text-xl text-Dark-Grey dark:text-gray-200 text-center mb-6 font-medium">Iniciar sesión</h2>
+        <h2 class="text-xl text-Dark-Grey dark:text-dark-text text-center mb-6 font-medium transition-colors duration-300">Iniciar sesión</h2>
 
         <form class="flex flex-col gap-5">
             
             <div class="flex flex-col gap-1">
-                <label for="tipo_doc" class="text-sm text-Dark-Grey dark:text-gray-300 ml-3 font-medium">Tipo de documento</label>
+                <label for="tipo_doc" class="text-sm text-Dark-Grey dark:text-dark-text ml-3 font-medium transition-colors duration-300">Tipo de documento</label>
                 <div class="relative">
-                    <select id="tipo_doc" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full pl-5 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card appearance-none">
+                    <select id="tipo_doc" class="w-full border border-soft-border dark:border-dark-border text-Dark-Grey dark:text-dark-text rounded-full pl-5 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card appearance-none transition-colors duration-300">
                         <option value="" disabled selected>Seleccione una opción...</option>
                         <option value="cc">Cédula de Ciudadanía</option>
                         <option value="ti">Tarjeta de Identidad</option>
                         <option value="ce">Cédula de Extranjería</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-Dark-Grey dark:text-gray-400">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-Light-Grey">
                         <span class="material-symbols-outlined text-xl">expand_more</span>
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col gap-1">
-                <label for="num_doc" class="text-sm text-Dark-Grey dark:text-gray-300 ml-3 font-medium">Número de Identificación</label>
-                <input type="text" id="num_doc" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-gray-400 dark:placeholder-gray-500">
+                <label for="num_doc" class="text-sm text-Dark-Grey dark:text-dark-text ml-3 font-medium transition-colors duration-300">Número de Identificación</label>
+                <input type="text" id="num_doc" class="w-full border border-soft-border dark:border-dark-border text-Dark-Grey dark:text-dark-text rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-Light-Grey transition-colors duration-300">
             </div>
 
             <div class="flex flex-col gap-1">
-                <label for="password" class="text-sm text-Dark-Grey dark:text-gray-300 ml-3 font-medium">Contraseña</label>
+                <label for="password" class="text-sm text-Dark-Grey dark:text-dark-text ml-3 font-medium transition-colors duration-300">Contraseña</label>
                 <div class="relative">
-                    <input type="password" id="password" class="w-full border border-Light-Grey dark:border-gray-600 text-Dark-Grey dark:text-gray-200 rounded-full pl-5 pr-12 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-gray-400 dark:placeholder-gray-500">
-                    <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-4 text-Light-Grey dark:text-gray-400 hover:text-Dark-Grey dark:hover:text-gray-200 focus:outline-none transition-colors cursor-pointer">
+                    <input type="password" id="password" placeholder="Tu contraseña" class="w-full border border-soft-border dark:border-dark-border text-Dark-Grey dark:text-dark-text rounded-full pl-5 pr-12 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent bg-white dark:bg-dark-card placeholder-Light-Grey transition-colors duration-300">
+                    <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-4 text-Light-Grey hover:text-Dark-Grey dark:hover:text-dark-text focus:outline-none transition-colors cursor-pointer">
                         <span id="icono-ojo" class="material-symbols-outlined text-xl">visibility</span>
                     </button>
                 </div>
@@ -72,17 +76,31 @@
                 <a href="#" class="text-sm text-blue dark:text-light-blue hover:text-light-blue dark:hover:text-blue hover:underline w-32 leading-tight transition-colors">
                     ¿Has olvidado tu contraseña?
                 </a>
-                <button type="submit" class="bg-blue hover:bg-light-blue text-white font-medium py-2 px-6 rounded-full transition-colors ">
+                <button type="submit" class="bg-blue hover:bg-light-blue text-white font-medium py-2 px-6 rounded-full transition-colors">
                     Iniciar sesión
                 </button>
             </div>
 
         </form>
 
-        <div class="text-center mt-8 text-sm text-Dark-Grey dark:text-gray-300">
+        <div class="text-center mt-8 text-sm text-Dark-Grey dark:text-dark-text transition-colors duration-300">
             <p>¿Aún no tienes una cuenta?</p>
             <a href="Register.html" class="text-blue dark:text-light-blue hover:text-light-blue dark:hover:text-blue hover:underline transition-colors">Crear una cuenta</a>
         </div>
     </div>
+
+    <script>
+        function toggleTheme() {
+            const htmlTag = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (htmlTag.classList.contains('dark')) {
+                htmlTag.classList.remove('dark');
+                themeIcon.innerText = 'dark_mode';
+            } else {
+                htmlTag.classList.add('dark');
+                themeIcon.innerText = 'light_mode';
+            }
+        }
+    </script>
 </body>
 </html>

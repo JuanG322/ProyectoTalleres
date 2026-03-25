@@ -5,33 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio - EPS Centro Médico</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        'blue': '#0960ae',
-                        'light-blue': '#007dbf',
-                        'Dark-Grey': '#515151',
-                        'Light-Grey': '#848484',
+                        'blue': '#0960ae', 'light-blue': '#007dbf',
+                        'Dark-Grey': '#515151', 'Light-Grey': '#848484',
+                        'white': '#ffffff', 'soft-border': '#d1d5db',
+                        'dark-bg': '#121212', 'dark-card': '#1e1e1e',
+                        'dark-text': '#e5e7eb', 'dark-border': '#374151',
+                        'alert-bg': '#eff6ff'
                     },
                 },
             },
         }
     </script>
 </head>
-<body class="bg-white min-h-screen font-sans">
+<body class="bg-white dark:bg-dark-bg min-h-screen font-sans transition-colors duration-300">
 
-    <header class="w-full border-b border-gray-200 bg-white">
+    <header class="w-full border-b border-soft-border dark:border-dark-border bg-white dark:bg-dark-card transition-colors duration-300">
         <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
             <div>
-                <h1 class="text-xl md:text-2xl font-bold text-blue leading-tight">
+                <h1 class="text-xl md:text-2xl font-bold text-blue dark:text-light-blue leading-tight transition-colors duration-300">
                     Nombre EPS-Centro <br class="md:hidden"> médico
                 </h1>
             </div>
 
-            <div>
-                <button class="border border-blue text-blue px-4 py-2 rounded-full text-sm font-medium hover:bg-blue hover:text-white transition-colors">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleTheme()" class="p-2 rounded-full bg-soft-border dark:bg-dark-border text-Dark-Grey dark:text-dark-text hover:bg-Light-Grey dark:hover:bg-Dark-Grey transition-colors shadow-sm flex items-center justify-center">
+                    <span id="theme-icon" class="material-symbols-outlined text-xl">dark_mode</span>
+                </button>
+
+                <button class="border border-blue dark:border-light-blue text-blue dark:text-light-blue px-4 py-2 rounded-full text-sm font-medium hover:bg-blue dark:hover:bg-light-blue hover:text-white transition-colors">
                     Mi perfil
                 </button>
             </div>
@@ -41,17 +49,17 @@
     <main class="max-w-6xl mx-auto px-4 py-8">
 
         <section class="mb-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-Dark-Grey">
+            <h2 class="text-2xl md:text-3xl font-bold text-Dark-Grey dark:text-dark-text transition-colors duration-300">
                 Hola, {{ nombre_usuario }}
             </h2>
-            <p class="text-Light-Grey mt-2 text-sm md:text-base">
+            <p class="text-Light-Grey mt-2 text-sm md:text-base transition-colors duration-300">
                 Consulta los servicios disponibles y el tiempo estimado de espera en esta sede.
             </p>
         </section>
 
         <section class="mb-8">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 shadow-sm">
-                <p class="text-sm md:text-base text-Dark-Grey leading-relaxed">
+            <div class="bg-alert-bg dark:bg-dark-border border border-light-blue dark:border-blue rounded-xl p-4 shadow-sm transition-colors duration-300">
+                <p class="text-sm md:text-base text-Dark-Grey dark:text-dark-text leading-relaxed transition-colors duration-300">
                     Puedes consultar desde aquí el estado de los servicios y los tiempos estimados.
                     La solicitud de turno solo estará disponible al escanear el código QR ubicado físicamente en la sede.
                 </p>
@@ -60,25 +68,36 @@
 
         <section>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-
                 {% for servicio in servicios %}
-                <div class="border border-Light-Grey rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                    <h3 class="text-xl font-semibold text-Dark-Grey mb-4">
+                <div class="bg-white dark:bg-dark-card border border-soft-border dark:border-dark-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-Dark-Grey dark:text-dark-text mb-4 transition-colors duration-300">
                         {{ servicio.nombre }}
                     </h3>
                     <div class="flex items-center justify-between">
-                        <p class="text-Light-Grey text-sm">Tiempo estimado</p>
-                        <span class="text-blue font-bold text-lg">
+                        <p class="text-Light-Grey text-sm transition-colors duration-300">Tiempo estimado</p>
+                        <span class="text-blue dark:text-light-blue font-bold text-lg transition-colors duration-300">
                             {{ servicio.tiempo_estimado }}
                         </span>
                     </div>
                 </div>
                 {% endfor %}
-
             </div>
         </section>
 
     </main>
 
+    <script>
+        function toggleTheme() {
+            const htmlTag = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (htmlTag.classList.contains('dark')) {
+                htmlTag.classList.remove('dark');
+                themeIcon.innerText = 'dark_mode';
+            } else {
+                htmlTag.classList.add('dark');
+                themeIcon.innerText = 'light_mode';
+            }
+        }
+    </script>
 </body>
 </html>
