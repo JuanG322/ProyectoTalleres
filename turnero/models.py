@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+
 # ==========================================
 # MODELO DE USUARIOS PERSONALIZADO
 # ==========================================
@@ -10,7 +11,7 @@ class UsuarioManager(BaseUserManager):
     def create_user(self, identificacion, email, nombre_completo, password=None, **extra_fields):
         if not email:
             raise ValueError('El usuario debe tener un correo electrónico')
-        
+
         email = self.normalize_email(email)
         user = self.model(
             num_documento=identificacion,
@@ -29,6 +30,7 @@ class UsuarioManager(BaseUserManager):
 
         return self.create_user(identificacion, email, nombre_completo, password, **extra_fields)
 
+
 class Usuario(AbstractBaseUser, PermissionsMixin):
     TIPO_DOC_CHOICES = [
         ('cc', 'Cédula de Ciudadanía'),
@@ -36,15 +38,19 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         ('ce', 'Cédula de Extranjería'),
     ]
 
-    num_documento = models.CharField(max_length=20, primary_key=True)
-    tipo_documento = models.CharField(max_length=5, choices=TIPO_DOC_CHOICES)
-    nombre = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100, unique=True)
-    rol = models.CharField(max_length=20, default='paciente')
-    activo = models.BooleanField(default=True)
-    
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    id_usuario = models.AutoField(primary_key=True, db_column='id_usuario')
+    num_documento = models.CharField(max_length=20, unique=True, db_column='num_documento')
+    tipo_documento = models.CharField(max_length=5, choices=TIPO_DOC_CHOICES, db_column='tipo_documento')
+    nombre = models.CharField(max_length=100, db_column='nombre')
+    email = models.EmailField(max_length=100, unique=True, db_column='email')
+    rol = models.CharField(max_length=20, default='paciente', db_column='rol')
+
+    activo = models.BooleanField(default=True, db_column='activo')
+    is_active = models.BooleanField(default=True, db_column='is_active')
+    is_staff = models.BooleanField(default=False, db_column='is_staff')
+    is_superuser = models.BooleanField(default=False, db_column='is_superuser')
+    last_login = models.DateTimeField(null=True, blank=True, db_column='last_login')
+    password = models.CharField(max_length=128, db_column='password')
 
     objects = UsuarioManager()
 
@@ -86,6 +92,7 @@ class Servicio(models.Model):
     def __str__(self):
         return self.nombre
 
+
 # ==========================================
 # 2. TABLAS INTERMEDIAS Y DEPENDIENTES
 # ==========================================
@@ -115,6 +122,7 @@ class Ventanilla(models.Model):
         db_table = 'VENTANILLAS'
         unique_together = ('sede', 'cod_ventanilla')
 
+
 # ==========================================
 # 3. RELACIÓN 1 A 1
 # ==========================================
@@ -130,13 +138,19 @@ class Configuracion(models.Model):
     class Meta:
         db_table = 'CONFIGURACIONES'
 
+
 # ==========================================
 # 4. TABLAS DE MOVIMIENTO (Transaccionales)
 # ==========================================
 
 class TokenRecuperacion(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, db_column='num_documento')
+    usuario = models.ForeignKey(
+        Usuario,
+        on_delete=models.CASCADE,
+        db_column='num_documento',
+        to_field='num_documento'
+    )
     token_hash = models.CharField(max_length=128)
     fecha_expiracion = models.DateTimeField()
     usado = models.BooleanField(default=False)
@@ -149,21 +163,37 @@ class TokenRecuperacion(models.Model):
 
 class Turno(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    sede_servicio = models.ForeignKey(SedeServicio, on_delete=models.PROTECT) 
+    sede_servicio = models.ForeignKey(SedeServicio, on_delete=models.PROTECT)
     fecha_turno = models.DateField()
     consecutivo_diario = models.IntegerField()
-    
+
     codigo_visual = models.CharField(max_length=10)
     estado = models.CharField(max_length=20, default='en_espera')
-    
+
     ventanilla = models.ForeignKey(Ventanilla, on_delete=models.SET_NULL, null=True, blank=True)
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='turnos_paciente', null=True, blank=True, db_column='num_documento_usuario')
-    operador = models.ForeignKey(Usuario, on_delete=models.SET_NULL, related_name='turnos_operador', null=True, blank=True, db_column='num_documento_operador')
-    
+    usuario = models.ForeignKey(
+        Usuario,
+        on_delete=models.CASCADE,
+        related_name='turnos_paciente',
+        null=True,
+        blank=True,
+        db_column='num_documento_usuario',
+        to_field='num_documento'
+    )
+    operador = models.ForeignKey(
+        Usuario,
+        on_delete=models.SET_NULL,
+        related_name='turnos_operador',
+        null=True,
+        blank=True,
+        db_column='num_documento_operador',
+        to_field='num_documento'
+    )
+
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_inicio_atencion = models.DateTimeField(null=True, blank=True)
     fecha_fin_atencion = models.DateTimeField(null=True, blank=True)
-    
+
     alerta_cercania_enviada = models.BooleanField(default=False)
     ultima_notificacion_enviada = models.DateTimeField(null=True, blank=True)
 
@@ -189,7 +219,14 @@ class HistorialEvento(models.Model):
     turno = models.ForeignKey(Turno, on_delete=models.CASCADE)
     fecha_hora_evento = models.DateTimeField()
     tipo_evento = models.CharField(max_length=20)
-    usuario_accion = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, blank=True, db_column='num_documento_accion')
+    usuario_accion = models.ForeignKey(
+        Usuario,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_column='num_documento_accion',
+        to_field='num_documento'
+    )
 
     class Meta:
         db_table = 'HISTORIAL_EVENTOS'
